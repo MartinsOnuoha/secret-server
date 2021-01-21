@@ -1,6 +1,5 @@
 const Secret = require('../models/secret');
 const { encrypt, decrypt, hash } = require('../helpers/crypt');
-const differenceInMilliseconds = require('date-fns/differenceInMilliseconds');
 
 class SecretController {
   /**
@@ -18,7 +17,7 @@ class SecretController {
       return res.status(200).json({ message: 'Sorry, too many eyes saw this secret' })
     }
     const today = new Date();
-    if (differenceInMilliseconds(today, secret.expiresAt) < 1) {
+    if ((today > secret.expiresAt) && secret.expiresAt !== 0) {
       return res.status(200).json({ message: 'Sorry, this secret is no longer available' })
     }
 
