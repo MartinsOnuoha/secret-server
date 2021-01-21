@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "serve": "node ./server/app.js",
-    "watch": "nodemon ./server/app.js",
+    "run:server": "node ./server/app.js",
+    "watch:server": "nodemon ./server/app.js",
     "test:server": "mocha ./server/tests --exit"
   },
   "dependencies": {

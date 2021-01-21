@@ -128,4 +128,3 @@ this folder contains the source code for the backend application written in Node
 ----
 
 ## Running the Application
-
