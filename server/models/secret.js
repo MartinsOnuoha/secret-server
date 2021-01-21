@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 const SecretSchema = Schema({
   hash: {
     type: String,
+    required: true
   },
-  secretText: {
-    type: String
+  secret: {
+    type: Schema.Types.Mixed,
+    required: true
   },
   remainingViews: {
     type: Number,
@@ -14,7 +16,7 @@ const SecretSchema = Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: new Date()
   },
   expiresAt: {
     type: Date,

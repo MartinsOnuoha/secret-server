@@ -1,5 +1,6 @@
 const Secret = require('../models/secret');
-const crypto = require('crypto');
+const { encrypt, decrypt, hash } = require('../helpers/crypt');
+const differenceInMilliseconds = require('date-fns/differenceInMilliseconds');
 
 class SecretController {
   /**
@@ -8,7 +9,29 @@ class SecretController {
    * @param {ResponseObject} res
    */
   static async getSecret(req, res) {
+    const { id } = req.params
+    const secret = await Secret.findOne({ hash: id }).then(secret => secret)
+    if (!secret) {
+      return res.status(404).json({ error: true, msg: 'This isn\'t a secret' })
+    }
+    if (secret.remainingViews === 0) {
+      return res.status(200).json({ message: 'Sorry, too many eyes saw this secret' })
+    }
+    const today = new Date();
+    if (differenceInMilliseconds(today, secret.expiresAt) < 1) {
+      return res.status(200).json({ message: 'Sorry, this secret is no longer available' })
+    }
 
+    secret.remainingViews -= 1;
+    await secret.save()
+
+    return res.json({
+      hash: secret.hash,
+      secretText: await decrypt(secret.secret),
+      createdAt: secret.createdAt,
+      expiresAt: secret.expiresAt,
+      remainingViews: secret.remainingViews
+    })
   }
   /**
    * create a new secret
@@ -16,16 +39,25 @@ class SecretController {
    * @param {ResponseObject} res
    */
   static async makeSecret(req, res) {
-    const { body } = req;
+    const { expireAfterViews, expireAfter, secret } = req.body;
+    const encryptedData = await encrypt(secret);
+
     const payload = {
-      hash: crypto.createHash('md5').update(data).digest("hex"),
-      remainingViews: body.expireAfterViews,
-      secretText: body.secret,
-      expiresAt: body.expireAfter
+      hash: hash(encryptedData),
+      secret: encryptedData,
+      remainingViews: expireAfterViews,
+      expiresAt: expireAfter
     }
 
-    const newSecret = await Secret.create(body);
-    return res.status(200).json(newSecret)
+    const newSecret = await Secret.create(payload);
+
+    return res.status(200).json({
+      hash: payload.hash,
+      secretText: secret,
+      createdAt: newSecret.createdAt,
+      expiresAt: newSecret.expiresAt,
+      remainingViews: newSecret.remainingViews
+    });
   }
 }
 
