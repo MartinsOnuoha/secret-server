@@ -1,7 +1,8 @@
 {
   "scripts": {
     "serve": "node ./server/app.js",
-    "watch": "nodemon ./server/app.js"
+    "watch": "nodemon ./server/app.js",
+    "test:server": "mocha ./server/tests --exit"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -10,6 +11,9 @@
     "mongoose": "^5.11.13"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.7"
   }
 }
