@@ -7,7 +7,7 @@ services:
     build:
       context: ./server
       dockerfile: ./Dockerfile
-    image: "martins-onuoha/secret-server-be"
+    image: "martinsonuoha/secret-server-be"
     ports:
       - "4000:4000"
     depends_on:
@@ -20,13 +20,18 @@ services:
     build:
       context: ./client
       dockerfile: ./Dockerfile
-    image: "martins-onuoha/secret-server-fe"
+    image: "martinsonuoha/secret-server-fe"
     ports:
       - "8080:8080"
     links:
       - "backend:be"
   frontend-unit-tests:
-    image: martins-onuoha/secret-server-fe
+    image: martinsonuoha/secret-server-fe
     command: dockerize -wait tcp://mongo:27017 -wait tcp://frontend:8080 -timeout 10s bash -c "yarn test:unit"
     depends_on:
       - frontend
+  backend-unit-tests:
+    image: martinsonuoha/secret-server-be
+    command: dockerize -wait tcp://mongo:27017 -wait tcp://backend:4000 -timeout 10s bash -c "yarn test:server"
+    depends_on:
+      - backend

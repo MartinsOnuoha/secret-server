@@ -11,7 +11,7 @@ class SecretController {
     const { id } = req.params
     const secret = await Secret.findOne({ hash: id }).then(secret => secret)
     if (!secret) {
-      return res.status(404).json({ error: true, msg: 'This isn\'t a secret' })
+      return res.status(200).json({ error: true, message: 'This isn\'t a secret' })
     }
     if (secret.remainingViews === 0) {
       return res.status(200).json({ message: 'Sorry, too many eyes saw this secret' })

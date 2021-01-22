@@ -1,5 +1,7 @@
 # Secret Server
 
+![image](https://github.com/MartinsOnuoha/secret-server/raw/master/images/2.png)
+
 A secret server to store and share secrets using a random generated URL.
 
 - [Secret Server](#secret-server)
@@ -145,6 +147,12 @@ To run the application locally, First, Clone the repository:
 git clone https://github.com/MartinsOnuoha/secret-server.git
 ```
 
+Navigate into the project root
+
+```bash
+cd secret-server
+```
+
 Next build the images
 
 ```bash
@@ -191,16 +199,16 @@ SECRET_KEY="5eb4b1358299539c686530e37e1173e2"
 ALGO="aes-256-ctr"
 ```
 
-Start the backend Server
+Install Dependencies and Start the backend Server
 
 ```bash
-cd server && node app
+cd server && yarn && node app
 ```
 
 Start the frontend Application
 
 ```bash
-cd client && yarn serve
+cd client && yarn && yarn serve
 ```
 
 You should now be able to navigate to the application from your browser on [http://localhost:8080](http://localhost:8080)
@@ -212,6 +220,10 @@ You should now be able to navigate to the application from your browser on [http
 ### Option1: With Docker
 
 The Frontend and Backend Tests are executed when the docker containers are started. And you can see them in the docker log.
+
+![image](https://github.com/MartinsOnuoha/secret-server/raw/master/images/fe-test.png)
+
+![image](https://github.com/MartinsOnuoha/secret-server/raw/master/images/be-test.png)
 
 If you're unable to see the logs, you can run `docker-compose log` to view it.
 
