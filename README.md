@@ -141,6 +141,8 @@ this folder contains the source code for the backend application written in Node
 - Requirements
   - docker installation
 
+> NOTE: The .env file for testing has been  pushed to the repo for convenience sake only.
+
 To run the application locally, First, Clone the repository:
 
 ```bash

@@ -36,6 +36,7 @@ export default {
           .then((res) => res.json())
           .then((data) => {
             if (data.message) {
+              this.secretText = '';
               this.message = data.message;
             }
             if (data.secretText) {
