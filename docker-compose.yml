@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  backend:
+    env_file:
+        "./server/.env"
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "martins-onuoha/secret-server-be"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  frontend:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "martins-onuoha/secret-server-fe"
+    ports:
+      - "8080:8080"
+    links:
+      - "backend:be"
+  frontend-unit-tests:
+    image: martins-onuoha/secret-server-fe
+    command: dockerize -wait tcp://mongo:27017 -wait tcp://frontend:8080 -timeout 10s bash -c "yarn test:unit"
+    depends_on:
+      - frontend

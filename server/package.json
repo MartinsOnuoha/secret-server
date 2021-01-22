@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "run:server": "node ./server/app.js",
-    "watch:server": "nodemon ./server/app.js",
-    "test:server": "mocha ./server/tests --exit"
+    "run:server": "node ./app.js",
+    "watch:server": "nodemon ./app.js",
+    "test:server": "mocha --timeout 30000 ./tests --exit"
   },
   "dependencies": {
     "cors": "^2.8.5",

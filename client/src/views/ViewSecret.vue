@@ -32,7 +32,7 @@ export default {
   methods: {
     findSecret() {
       if (this.hash) {
-        fetch(`http://0.0.0.0:4000/api/secret/${this.hash}`)
+        fetch(`http://localhost:4000/api/secret/${this.hash}`)
           .then((res) => res.json())
           .then((data) => {
             if (data.message) {

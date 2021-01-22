@@ -56,7 +56,7 @@ export default {
     createSecret() {
       const { secret, expireAfterViews, expireAfter } = this;
 
-      this.postData('http://0.0.0.0:4000/api/secret/', {
+      this.postData('http://localhost:4000/api/secret/', {
         secret,
         expireAfterViews,
         expireAfter: addMinutes(new Date(), expireAfter),

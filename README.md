@@ -7,6 +7,11 @@ A secret server to store and share secrets using a random generated URL.
   - [API Docs](#api-docs)
   - [Project Structure](#project-structure)
   - [Running the Application](#running-the-application)
+    - [Option 1: With Docker](#option-1-with-docker)
+    - [Option 2: Without Docker](#option-2-without-docker)
+  - [Tests](#tests)
+    - [Option1: With Docker](#option1-with-docker)
+    - [Option2: Without Docker](#option2-without-docker)
 
 ## How it Works
 
@@ -128,3 +133,104 @@ this folder contains the source code for the backend application written in Node
 ----
 
 ## Running the Application
+
+### Option 1: With Docker
+
+- Requirements
+  - docker installation
+
+To run the application locally, First, Clone the repository:
+
+```bash
+git clone https://github.com/MartinsOnuoha/secret-server.git
+```
+
+Next build the images
+
+```bash
+docker-compose build
+```
+
+start the containers
+
+```bash
+docker-compose up
+```
+
+Great! Now the frontend application should be accessible on [http://localhost:8080](http://localhost:8080)
+
+----
+
+### Option 2: Without Docker
+
+- Requirements
+  - Node.js & NPM setup
+  - MongoDB Installation
+
+clone the repository
+
+```bash
+git clone https://github.com/MartinsOnuoha/secret-server.git
+```
+
+change directory into the project folder
+
+```bash
+cd secret-server
+```
+
+Update the .env file with these values:
+
+```python
+PORT=4000
+HOST='0.0.0.0'
+TEST_PORT=8080
+DEV_DB="mongodb://localhost:27017/secret-server"
+TEST_DB="mongodb://localhost/secret-server-test"
+SECRET_KEY="5eb4b1358299539c686530e37e1173e2"
+ALGO="aes-256-ctr"
+```
+
+Start the backend Server
+
+```bash
+cd server && node app
+```
+
+Start the frontend Application
+
+```bash
+cd client && yarn serve
+```
+
+You should now be able to navigate to the application from your browser on [http://localhost:8080](http://localhost:8080)
+
+----
+
+## Tests
+
+### Option1: With Docker
+
+The Frontend and Backend Tests are executed when the docker containers are started. And you can see them in the docker log.
+
+If you're unable to see the logs, you can run `docker-compose log` to view it.
+
+```bash
+docker-compose log --tail="30"
+```
+
+### Option2: Without Docker
+
+However for running tests outside of the docker container. You need to run both tests individually.
+
+- Frontend
+
+```bash
+cd client && yarn test:unit
+```
+
+- Backend
+
+```bash
+cd server && yarn test:server
+```

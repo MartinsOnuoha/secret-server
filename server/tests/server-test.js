@@ -6,7 +6,7 @@ const chaiHttp = require('chai-http');
 chai.should();
 chai.use(chaiHttp);
 
-describe('BaseEndpoint', () => {
+describe('SecretServer', () => {
   let server;
   beforeEach(() => {
     server = require('../app');
